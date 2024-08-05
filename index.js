@@ -30,7 +30,6 @@ let monitor = null;
 let appLifecycleD = null,
     pageLifecycleD = null,
     componentLifecycleD = null,
-    cb = null,
     customHandleTitleD = CUSTOM_EVENT_TITLE;
 
 export const core = function (options) {
@@ -41,6 +40,7 @@ export const core = function (options) {
         reportUrl,
         business,
         appName,
+        unionId,
         appLifecycle,
         pageLifecycle,
         componentLifecycle,
@@ -48,7 +48,7 @@ export const core = function (options) {
         cb
     } = options || {};
     // 实例化监控上报方法
-    monitor = new Monitor({ reportUrl, business, appName, cb });
+    monitor = new Monitor({ reportUrl, business, appName, unionId, cb });
     appLifecycleD = appLifecycle;
     pageLifecycleD = pageLifecycle;
     componentLifecycleD = componentLifecycle;

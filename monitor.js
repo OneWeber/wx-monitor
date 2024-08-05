@@ -9,6 +9,7 @@ class ErrorMonitor {
         this.business = options?.business || '';
         this.appName = options?.appName || '';
         this.cb = options?.cb || null;
+        this.unionId = options?.unionId || '';
         this.location = null;
         this.systemInfo = null;
         this.init();
@@ -93,7 +94,8 @@ class ErrorMonitor {
                     reportType,
                     env: __wxConfig.envVersion,
                     business: _this.business,
-                    appName: _this.appName
+                    appName: _this.appName,
+                    unionId: _this.unionId
                 };
                 console.log("上报信息", errorInfo);
                 if (_this.cb) {

@@ -25,6 +25,7 @@
     env: string, // 环境
     business: string, // 业务线
     appName: string, // 项目名称
+    unionId: string, // 用户标识
     ...
 }
 ```
@@ -39,6 +40,7 @@
     pageLifecycle: array, // 需要监听的page生命周期
     componentLifecycle: array, // 需要监听的component生命周期
     customHandleTitle: string, // 自定义需要监听事件头部名字
+    unionId: string, // 用户标识
     cb: function, // 自定义上报方法
 }
 ```
