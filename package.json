@@ -1,0 +1,11 @@
+{
+  "name": "wx-monitor",
+  "version": "1.0.2",
+  "description": "微信小程序监控",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zky",
+  "license": "ISC"
+}
