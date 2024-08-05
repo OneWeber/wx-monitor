@@ -1,13 +1,12 @@
-const Monitor = require('./monitor');
-const { 
+import Monitor from "./monitor";
+import {
     REPORT_TYPE,
     REPORT_MAP,
     APP_LIFECYCLE,
     PAGE_LIFECYCLE,
     COMPONENT_LIFECYCLE,
     CUSTOM_EVENT_TITLE,
- } = require('./constant')
-
+} from "./constant";
 /**
  *
  * @param {*} options
@@ -33,7 +32,7 @@ let appLifecycleD = null,
     componentLifecycleD = null,
     customHandleTitleD = CUSTOM_EVENT_TITLE;
 
-const core = function (options) {
+export const core = function (options) {
     if (!wx) {
         throw new Error("请确认当前环境是否为微信小程序");
     }
@@ -209,6 +208,3 @@ function createComponentHandler(componentOptions, componentName) {
 
     return componentOptions;
 }
-
-
-module.exports = core;
