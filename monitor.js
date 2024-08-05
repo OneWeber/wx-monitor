@@ -8,6 +8,7 @@ class ErrorMonitor {
         this.reportUrl = options?.reportUrl || '';
         this.business = options?.business || '';
         this.appName = options?.appName || '';
+        this.cb = options?.cb || null;
         this.location = null;
         this.systemInfo = null;
         this.init();
@@ -95,41 +96,30 @@ class ErrorMonitor {
                     appName: _this.appName
                 };
                 console.log("上报信息", errorInfo);
+                if (_this.cb) {
+                    _this.cb(errorInfo)
+                } else {
+                    _this.reportRequest();
+                }
+                
             },
         });
     }
 
-    captureScreenshot() {
-        const ctx = wx.createCanvasContext("canvas-id");
-        ctx.draw(false, () => {
-            wx.canvasToTempFilePath({
-                canvasId: "canvas-id",
-                success: async function (res) {
-                    const _baseUrl = "http://arsenalgw.qa.ly.com/jq-customer/1";
-                    const header = {
-                        "content-type": "multipart/form-data",
-                        token: "62986665b1e3c1601ecd8d7b",
-                        traceSource: "traceSource",
-                    };
-                    header.Cookie = `SessionToken=${wx.getStorageSync("mall.sessionToken")}`;
-                    wx.uploadFile({
-                        url: `${_baseUrl}/seller/products/uploadImgOrigin/600025`,
-                        filePath: res.tempFilePath,
-                        header,
-                        name: "file",
-                        success: (res) => {
-                            console.log("上传结果===", res);
-                        },
-                        fail: (err) => {
-                            console.log("上传失败====", err);
-                        },
-                    });
-                },
-                fail(err) {
-                    console.log("错误信息", err);
-                },
-            });
-        });
+    reportRequest(info) {
+        wx.request({
+            url: this.reportUrl,
+            data: info,
+            header: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            method: 'POST',
+            sslVerify: true,
+            success: (res) => {},
+            fail: (error) => {}
+        })
     }
 }
 
