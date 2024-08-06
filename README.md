@@ -5,7 +5,7 @@
 - # 功能说明
 1. 劫持并重写App，Page，Component生命周期，同时也会保留开发人员自定义的生命周期逻辑。所以无需担心此插件会影响到项目中App及各个页面生命周期的逻辑。该插件支持自定义App，Page，Component监听生命周期，字段分别是、appLifecycle，pageLifecycle，componentLifecycle，如若未传则默认为组件内置的生命周期，如需自定义，如下：core({appLifecycle: ['onLaunch']})。这样App只会监控onLaunch。注：如参数为appLifecycle: []，这种空数组，则表示App任务生命周期都不会被监控。
 2. 可以自定义事件监控，上报用户在所有Page或Component中的点击事件。注：如Page或Component中有事件需要监控且上报，需要将事件名前面加上handle，如bind:tap="handleDebug"。同时也可以自定义事件头名，如希望bint:tap="testDebug"这种test开头的方法被监听，只需要在引入插件后执行core()时传入参customHandleTitle=test。如core({customHandleTitle: test})。
-3. 支持wx.reqeust请求监控。微信小程序项目中大多都已封装好request公共请求。此插件就没有再去封装request，而是暴露了一个监控类ErrorMonitor。只需要在项目中封装request的文件中引入montitor，然后实例化new ErrorMonitor()，即可在想要监控上报的地方如果发起请求，请求成功返回，失败返回等地方去(new ErrorMonitor()).report()。
+3. 支持wx.reqeust请求监控。微信小程序项目中大多都已封装好request公共请求。此插件就没有再去封装request，而是暴露了一个监控类ErrorMonitor。只需要在项目中封装request的文件中引入montitor，然后实例化new ErrorMonitor()，即可在想要监控上报的地方如果发起请求，请求成功返回，失败返回等地方去(new ErrorMonitor()).reportHandler()。
 4. 支持代码错误监控。此插件支持小程序中代码错误监控，如错误未被catch，线上常出现异常或白屏等，此插件无需再开发，只需在app.js引入插件执行core()即可，该插件已为项目代码监控及上报。
 5. 支持自定义上报事件，如果开发者想要拿到上报数据的结构后自定义事件处理，只需要在调用core方法时传入cb，如core({cb: yourFunction})即可，如果没有传cb，会默认以POST请求向传入的reportUrl地址发起上报请求。
 
