@@ -71,14 +71,14 @@ export const core = function (options) {
         originalPage(enhancedPageOptions);
     };
 
-    // const originalComponent = Component;
+    const originalComponent = Component;
 
     // 定义一个新的 Component 函数
-    // Component = function (componentOptions) {
-    //     const componentName = componentOptions.name || "UnnamedComponent"; // 获取组件名称
-    //     const enhancedComponentOptions = createComponentHandler(componentOptions, componentName);
-    //     originalComponent(enhancedComponentOptions);
-    // };
+    Component = function (componentOptions) {
+        const componentName = componentOptions.name || "UnnamedComponent"; // 获取组件名称
+        const enhancedComponentOptions = createComponentHandler(componentOptions, componentName);
+        originalComponent(enhancedComponentOptions);
+    };
 };
 
 function createAppHandler(appOptions) {
@@ -140,7 +140,7 @@ function createHandler(handler, type, context) {
             log.page = context.route;
             log.options = context.options;
         } else if (type.includes("Component") && context) {
-            log.componentPath = context._componentName; // 添加组件名称信息
+            log.componentPath = context.is // 添加组件名称信息
         }
 
         monitor?.reportHandler(t, rt, handler.name, log);
