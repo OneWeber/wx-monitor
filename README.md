@@ -41,6 +41,8 @@
     componentLifecycle: array, // 需要监听的component生命周期
     customHandleTitle: string, // 自定义需要监听事件头部名字
     unionId: string, // 用户标识
+    isMergeReport: boolean, // 是否合并上报
+    cacheTimeout: number, // 合并上报计时
     cb: function, // 自定义上报方法
 }
 ```
@@ -59,3 +61,7 @@
 2. 大家也可以把代码拉到本地自己定义自己需要上报的字段。
 3. 插件内部调用URL上报的请求方式为POST请求。
 4. 注意微信小程序的npm构建，放在miniprogram_npm引入即可使用
+
+- # v 1.1.0版本更新事项
+1. 上报类非自定义上报时增加了reportUrl的强校验，未传上报地址会被阻断。
+2. 增加了操作事件合并上报选项(isMergeReport)，若合并上报，同一页面中的同一事件在cacheTime默认为10s内不会立即上报，而是会统计次数，在定时器完毕或有App和Page生命周期触发时会统一上报，上报的数据结构中会新增一个reportCount(触发次数)和reportTime(分别触发的时间)。可通过入参自定义是否合并上报及批量合并上报定时器时长。如core({isMergeReport: true, cacheTimeout: 1000})。同时，如果选择了开启合并上报，当开发者也传入了自定义上报的回调方法同样会合并后才会触发自定义上报回调。

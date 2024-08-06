@@ -1,6 +1,6 @@
 {
   "name": "wx-monitor",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "微信小程序监控",
   "main": "index.js",
   "scripts": {

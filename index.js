@@ -45,10 +45,12 @@ export const core = function (options) {
         pageLifecycle,
         componentLifecycle,
         customHandleTitle = CUSTOM_EVENT_TITLE,
+        isMergeReport,
+        cacheTimeout,
         cb
     } = options || {};
     // 实例化监控上报方法
-    monitor = new Monitor({ reportUrl, business, appName, unionId, cb });
+    monitor = new Monitor({ reportUrl, business, appName, unionId, isMergeReport, cacheTimeout, cb });
     appLifecycleD = appLifecycle;
     pageLifecycleD = pageLifecycle;
     componentLifecycleD = componentLifecycle;
@@ -93,7 +95,7 @@ function createAppHandler(appOptions) {
                     query: args[0] && args[0].query,
                     scene: args[0] && args[0].scene,
                 };
-                monitor?.report(
+                monitor?.reportHandler(
                     REPORT_TYPE["LIFECYCLE"],
                     REPORT_MAP["LIFECYCLE"]["APP_LIFECYCLE"],
                     methodName,
@@ -141,7 +143,7 @@ function createHandler(handler, type, context) {
             log.componentPath = context._componentName; // 添加组件名称信息
         }
 
-        monitor?.report(t, rt, handler.name, log);
+        monitor?.reportHandler(t, rt, handler.name, log);
 
         if (handler && !handler._isWrapped) {
             return handler.apply(context, args);
