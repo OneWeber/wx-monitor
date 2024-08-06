@@ -80,7 +80,7 @@ class ErrorMonitor {
                 const errorInfo = {
                     type,
                     message,
-                    page: extraInfo?.path ? extraInfo.path : currentPage ? currentPage.route : "",
+                    page: extraInfo?.page ? extraInfo.page : currentPage ? currentPage.route : "",
                     options: extraInfo?.options
                         ? extraInfo?.options
                         : currentPage
