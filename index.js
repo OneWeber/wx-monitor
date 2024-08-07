@@ -200,7 +200,7 @@ function createComponentHandler(componentOptions, componentName) {
     Object.keys(componentOptions).forEach((key) => {
         if (
             typeof componentOptions[key] === "function" &&
-            key.startsWith("handle") &&
+            key.startsWith(customHandleTitleD) &&
             !componentOptions[key]._isWrapped
         ) {
             const originalMethod = componentOptions[key];
