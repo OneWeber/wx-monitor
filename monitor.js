@@ -139,6 +139,7 @@ class ErrorMonitor {
               extraInfo,
               reportCount: 0,
               unionId: _this.unionId,
+              ..._this.customObj
             };
 
             setTimeout(() => {

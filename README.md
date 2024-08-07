@@ -105,5 +105,5 @@ wx.request({
 3. 插件内部调用URL上报的请求方式为POST请求。
 4. 注意微信小程序的npm构建，放在miniprogram_npm引入即可使用
 
-- # v 1.1.4版本更新事项
+- # v 1.1.5版本更新事项
 1. 增加自定义上报对象customObj，使用如下core({customObj: {xxxx: xxx}})
