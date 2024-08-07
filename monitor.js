@@ -63,13 +63,6 @@ class ErrorMonitor {
     });
   }
 
-  addSnapshot(snapshot) {
-    this.snapshots.push(snapshot);
-    if (this.snapshots.length > 10) {
-      this.snapshots.shift(); // 只保留最近10张截图
-    }
-  }
-
   getLocation() {
     wx.getLocation({
       type: "wgs84",
@@ -139,7 +132,7 @@ class ErrorMonitor {
               extraInfo,
               reportCount: 0,
               unionId: _this.unionId,
-              ..._this.customObj
+              ..._this.customObj,
             };
 
             setTimeout(() => {
@@ -189,7 +182,7 @@ class ErrorMonitor {
             business: _this.business,
             appName: _this.appName,
             unionId: _this.unionId,
-            ..._this.customObj
+            ..._this.customObj,
           };
           if (_this.cb) {
             _this.cb(errorInfo);

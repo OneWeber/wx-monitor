@@ -43,6 +43,7 @@
     unionId: string, // 用户标识
     isMergeReport: boolean, // 是否合并上报
     cacheTimeout: number, // 合并上报计时
+    customObj: object, // 自定义上报字段
     cb: function, // 自定义上报方法
 }
 ```
@@ -62,6 +63,9 @@ core({
     unionId: 'xxx',
     isMergeReport: false,
     cacheTimeout: 10000,
+    customObj: {
+        xxx: 'xxx'
+    },
     cb: cbFunc
 })
 
