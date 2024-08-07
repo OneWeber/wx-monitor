@@ -47,10 +47,11 @@ export const core = function (options) {
         customHandleTitle = CUSTOM_EVENT_TITLE,
         isMergeReport,
         cacheTimeout,
+        customObj,
         cb
     } = options || {};
     // 实例化监控上报方法
-    monitor = new Monitor({ reportUrl, business, appName, unionId, isMergeReport, cacheTimeout, cb });
+    monitor = new Monitor({ reportUrl, business, appName, unionId, isMergeReport, cacheTimeout, customObj, cb });
     appLifecycleD = appLifecycle;
     pageLifecycleD = pageLifecycle;
     componentLifecycleD = componentLifecycle;

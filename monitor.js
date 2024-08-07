@@ -14,6 +14,7 @@ class ErrorMonitor {
     this.isMergeReport = options?.isMergeReport || false; // 是否合并上报
     this.location = null; // 地址信息
     this.systemInfo = null; // 手机系统信息
+    this.customObj = options?.customObj || {}; // 自定义上传字段
     this.reportCache = {}; // 用于缓存相似错误报告
     this.cacheTimeout = options?.cacheTimeout || 10000; // 缓存时间为10秒
     this.init();
@@ -164,7 +165,7 @@ class ErrorMonitor {
         try {
           const pages = getCurrentPages();
           const currentPage = pages[pages.length - 1];
-          const errorInfo = {
+          let errorInfo = {
             type,
             message,
             page: extraInfo?.page
@@ -187,6 +188,7 @@ class ErrorMonitor {
             business: _this.business,
             appName: _this.appName,
             unionId: _this.unionId,
+            ..._this.customObj
           };
           if (_this.cb) {
             _this.cb(errorInfo);
