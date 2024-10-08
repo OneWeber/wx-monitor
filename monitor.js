@@ -145,7 +145,7 @@ class ErrorMonitor {
                           page,
                           options,
                           reportTimes: [],
-                          createOn: _this.formatDate(new Date()),
+                          createOn: new Date().getTime(),
                           location: _this.location,
                           systemInfo: _this.systemInfo,
                           networkType: res.networkType,
@@ -206,7 +206,7 @@ class ErrorMonitor {
                           : currentPage
                               ? currentPage.options
                               : {},
-                      createOn: _this.formatDate(new Date()),
+                      createOn: new Date().getTime(),
                       extraInfo,
                       location: _this.location,
                       systemInfo: _this.systemInfo,

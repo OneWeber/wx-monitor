@@ -143,7 +143,7 @@ function addDefaultLifecycleMethods(proto, lifecycleList, type) {
             proto[methodName] = function (...args) {
                 const log = {
                     type: "function",
-                    time: new Date().toISOString(),
+                    time: new Date().getTime(),
                     belong: type,
                     method: methodName,
                     arguments: args,
@@ -172,7 +172,7 @@ function createAppHandler(appOptions) {
                 }
                 const breadcrumb = {
                     type: "function",
-                    time: new Date().toISOString(),
+                    time: new Date().getTime(),
                     belong: "App",
                     method: methodName,
                     path: args[0] && args[0].path,
@@ -199,7 +199,7 @@ function createHandler(handler, type, context, performance) {
     return function (...args) {
         const log = {
             type: type,
-            time: new Date().toISOString(),
+            time: new Date().getTime(),
             method: handler.name || "anonymous",
             arguments: args,
         };
@@ -423,7 +423,7 @@ function createPageHandler(pageOptions) {
                 pageOptions[methodName] = function (...args) {
                     const log = {
                         type: "function",
-                        time: new Date().toISOString(),
+                        time: new Date().getTime(),
                         belong: "Page",
                         method: methodName,
                         arguments: args,
@@ -481,7 +481,7 @@ function createComponentHandler(componentOptions, componentName) {
             componentOptions[methodName] = function (...args) {
                 const log = {
                     type: "function",
-                    time: new Date().toISOString(),
+                    time: new Date().getTime(),
                     belong: "Component",
                     method: methodName,
                     arguments: args,
