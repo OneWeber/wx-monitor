@@ -5,7 +5,7 @@
 - # 功能说明
 1. 劫持并重写App，Page，Component生命周期，同时也会保留开发人员自定义的生命周期逻辑。所以无需担心此插件会影响到项目中App及各个页面生命周期的逻辑。该插件支持自定义App，Page，Component监听生命周期，字段分别是、appLifecycle，pageLifecycle，componentLifecycle，如若未传则默认为组件内置的生命周期，如需自定义，如下：core({appLifecycle: ['onLaunch']})。这样App只会监控onLaunch。注：如参数为appLifecycle: []，这种空数组，则表示App任务生命周期都不会被监控。
 2. 可以自定义事件监控，上报用户在所有Page或Component中的点击事件。注：如Page或Component中有事件需要监控且上报，需要将事件名前面加上handle，如bind:tap="handleDebug"。同时也可以自定义事件头名，如希望bint:tap="testDebug"这种test开头的方法被监听，只需要在引入插件后执行core()时传入参customHandleTitle=test。如core({customHandleTitle: test})。
-3. 支持wx.reqeust请求监控。微信小程序项目中大多都已封装好request公共请求。此插件就没有再去封装request，而是暴露了一个监控类ErrorMonitor。只需要在项目中封装request的文件中引入montitor，然后实例化new ErrorMonitor()，即可在想要监控上报的地方如果发起请求，请求成功返回，失败返回等地方去(new ErrorMonitor()).reportHandler()。
+3. 支持wx.reqeust请求监控。微信小程序项目中大多都已封装好request公共请求。此插件就没有再去封装request，而是暴露了一个监控类ErrorMonitor。只需要在项目中封装request的文件中引入montitor，然后实例化new ErrorMonitor()，即可在想要监控上报的地方如果发起请求，请求成功返回，失败返回等地方去(new ErrorMonitor()).report()。
 4. 支持代码错误监控。此插件支持小程序中代码错误监控，如错误未被catch，线上常出现异常或白屏等，此插件无需再开发，只需在app.js引入插件执行core()即可，该插件已为项目代码监控及上报。
 5. 支持自定义上报事件，如果开发者想要拿到上报数据的结构后自定义事件处理，只需要在调用core方法时传入cb，如core({cb: yourFunction})即可，如果没有传cb，会默认以POST请求向传入的reportUrl地址发起上报请求。
 
@@ -34,6 +34,8 @@
 ```javascript
 {
     reportUrl: string, // 监控上报地址 required
+    configUrl: string, // 获取上报配置
+    performanceUrl: string, // 性能上报地址 required
     business: string, // 业务线
     appName: string, // 小程序名字
     appLifecycle: array, // 需要监听的app生命周期
@@ -41,57 +43,8 @@
     componentLifecycle: array, // 需要监听的component生命周期
     customHandleTitle: string, // 自定义需要监听事件头部名字
     unionId: string, // 用户标识
-    isMergeReport: boolean, // 是否合并上报
-    cacheTimeout: number, // 合并上报计时
-    customObj: object, // 自定义上报字段
     cb: function, // 自定义上报方法
 }
-```
-
-- # 使用示例
-```javascript
-// app.js
-import { core } from './miniprogram_npm/wx-monitor/index';
-core({
-    reportUrl: 'https://xxxxxxx',
-    business: 'xxx',
-    appName: 'xxx',
-    appLifecycle: ['onLaunch', 'onShow', 'onHide'],
-    pageLifecycle: ['onShow'],
-    componentLifecycle: ['attached'],
-    customHandleTitle: 'handle',
-    unionId: 'xxx',
-    isMergeReport: false,
-    cacheTimeout: 10000,
-    customObj: {
-        xxx: 'xxx'
-    },
-    cb: cbFunc
-})
-
-const cbFunc = (val) => {
-    // 自定义处理
-}
-
-
-// request.js 路径根据自己项目来
-import ErrorMonitor from './miniprogram_npm/wx-monitor/monitor';
-import { REPORT_TYPE, REPORT_MAP } from './miniprogram_npm/wx-monitor/constant'
-const errorMonitor = new ErrorMonitor({
-    reportUrl: 'https://xxxxxx',
-});
-wx.request({
-    url: '',
-    data: {},
-    method: '',
-    success: () => {
-        errorMonitor.reportHandler(REPORT_TYPE['REQUEST'], REPORT_MAP['REQUEST']['REQUEST_SUCCESS'], res?.msg || '', {url, data, method, header, res})
-    },
-    fail: () => {
-        errorMonitor.reportHandler(REPORT_TYPE['REQUEST'], REPORT_MAP['REQUEST']['REQUEST_SUCCESS'], res?.msg || '', {url, data, method, header, res})
-    }
-})
-
 ```
 
 - # 监控类型
@@ -101,14 +54,10 @@ wx.request({
 4. EVENT: 事件类型
 
 - # 待开发项
-1. 自动监听用户可配置但页面中未声明的生命周期。
+1. 上报优化，如短时间相同异常只报一次等。
 
 - # 注意事项
 1. 目前开发中也能拿到数据了，所以开发者可以拿到数据自己去组装上报服务端的请求。
 2. 大家也可以把代码拉到本地自己定义自己需要上报的字段。
 3. 插件内部调用URL上报的请求方式为POST请求。
 4. 注意微信小程序的npm构建，放在miniprogram_npm引入即可使用
-5. 目前监听的生命周期如onShow, onLoad等，需要开发者在页面中声明出来，后续会处理自动监听，无需用户声明。
-
-- # v 1.1.5版本更新事项
-1. 增加自定义上报对象customObj，使用如下core({customObj: {xxxx: xxx}})

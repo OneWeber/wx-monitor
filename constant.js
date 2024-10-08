@@ -42,10 +42,10 @@ export const REPORT_MAP = {
 export const APP_LIFECYCLE = ["onLaunch", "onShow", "onHide"]
 
 // 需要监听的Page的生命周期
-export const PAGE_LIFECYCLE = ["onShow", "onHide"]
+export const PAGE_LIFECYCLE = ["onShow", "onHide", "onLoad", "onUnload"]
 
 // 需要监听的Component的生命周期
-export const COMPONENT_LIFECYCLE = ["created", "attached", "ready", "moved", "detached"]
+export const COMPONENT_LIFECYCLE = ["attached"]
 
 // 自定义事件头命名
 export const CUSTOM_EVENT_TITLE = 'handle'
